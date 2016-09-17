@@ -1,4 +1,5 @@
 <?php
+  date_default_timezone_set('America/Sao_Paulo');
 	include "controle/confereconexao.php";
 	$email = $_COOKIE['email'];
 	
@@ -43,8 +44,12 @@
     }
     </script>
     <div class="form-group">
+      <?php
+        $atual = date("Y-m-d");
+      ?>
+      <input type="hidden" id="hoje" value="<?php echo $atual; ?>" />
       <label for="datai">Data Início</label>
-      <input type="date" onBlur="copiadata()" required class="form-control" name="datai" id="datai" placeholder="Digite aquia data que inicia o evento">
+      <input type="date" onBlur="copiadata()" required class="form-control" name="datai" id="datai" placeholder="Digite aquia data que inicia o evento" value="<?php echo $atual; ?>" />
     </div>
     <div class="form-group">
       <label for="horai">Hora Início</label>
@@ -52,11 +57,11 @@
     </div>
     <div class="form-group">
       <label for="datat">Data Término</label>
-      <input type="date" required class="form-control" name="datat" id="datat" placeholder="Digite aquia data que termina o evento">
+      <input type="date" required class="form-control" name="datat" id="datat" placeholder="Digite aquia data que termina o evento" onblur="conferedata()" />
     </div>
     <div class="form-group">
       <label for="horat">Hora Término</label>
-      <input type="time" required class="form-control" name="horat" id="horat" placeholder="Digite aqui a hora de início do evento">
+      <input type="time" required class="form-control" name="horat" id="horat" placeholder="Digite aqui a hora de início do evento" onblur="conferehora()" />
     </div>
     <div class="form-group">
       <label for="endereco">Endereço do Evento</label>
@@ -68,11 +73,11 @@
     </div>
     <div class="form-group">
       <label for="telefone">Telefone de contato</label>
-      <input type="text" required class="form-control" name="telefone" id="telefone" placeholder="Digite aqui um telefone de contato, não se preocupe com o formato">
+      <input type="tel" required class="form-control telefone" name="telefone" id="telefone" placeholder="Digite aqui um telefone de contato, não se preocupe com o formato">
     </div>
     <div class="form-group">
       <label for="investimento">Valor do Investimento</label>
-      <input type="number" required step="any" class="form-control" name="investimento" id="investimento" placeholder="Caso seja gratuito, digite zero" title="Caso seja um evento gratuito, deixe em branco.">
+      <input type="number" required step="any" min="0" class="form-control" name="investimento" id="investimento" placeholder="Caso seja gratuito, digite zero" title="Caso seja um evento gratuito, deixe em branco.">
     </div>
      <div class="form-group">
       <label for="video">Vídeo de Divulgação</label>
@@ -86,3 +91,45 @@
 <?php
 	include "posterior.php";
 ?>
+  <script src="http://digitalbush.com/wp-content/uploads/2014/10/jquery.maskedinput.js"></script>
+<script>
+
+jQuery("input.telefone")
+        .mask("(99) 9999-9999?9")
+        .focusout(function (event) {  
+            var target, phone, element;  
+            target = (event.currentTarget) ? event.currentTarget : event.srcElement;  
+            phone = target.value.replace(/\D/g, '');
+            element = $(target);  
+            element.unmask();  
+            if(phone.length > 10) {  
+                element.mask("(99) 99999-999?9");  
+            } else {  
+                element.mask("(99) 9999-9999?9");  
+            }  
+        });
+      function conferedata(){
+        datai = document.getElementById("datai").value;
+        datat = document.getElementById("datat").value;
+        hoje = document.getElementById("hoje").value;
+        if(datat < datai){
+          alert("A data e hora de término, não pode ser menor que a data e hora de início");
+          document.getElementById("datat").value = document.getElementById("datai").value;
+          document.getElementById("datat").focus();
+        }
+      }
+      function conferehora(){
+        datai = document.getElementById("datai").value;
+        datat = document.getElementById("datat").value;
+        if(datai == datat){
+          horai = document.getElementById("horai").value;
+          horat = document.getElementById("horat").value;
+          if(horat <= horai){
+            alert("A data e hora de término, não pode ser menor ou igual que a data e hora de início");
+            document.getElementById("horat").value = document.getElementById("horai").value;
+            document.getElementById("horat").focus();
+
+          }
+        }
+      }
+  </script>

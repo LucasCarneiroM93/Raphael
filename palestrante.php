@@ -1,6 +1,9 @@
 <?php
 	include "modelo/banco.php";
 	include "anterior.php";
+	if(empty($_POST['pesquisa'])){
+		header("Location:palestrantes.php");
+	}
 ?>
 	<div class="form-group">
 	<form method="post" action="palestrante.php">
@@ -19,9 +22,7 @@
                 </a>
     </div>
 <?php
-	if(empty($_POST['pesquisa'])){
-		header("Location:palestrantes.php");
-	}
+	
 	$pesquisa = $_POST['pesquisa'];
 	$busca = "SELECT * from usuario where (nome like '%$pesquisa%' or email like '%$pesquisa%' or cidade like '%$pesquisa%') and palestrante = 'sim'";
 	$total_reg = "5"; // número de registros por página

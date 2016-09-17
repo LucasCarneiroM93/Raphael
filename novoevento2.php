@@ -14,6 +14,12 @@
 		$horai = htmlspecialchars($_POST['horai']);
 		$datainicio = "$datai $horai";
 		$timestampinicio = strtotime($datainicio);
+		$agora = time();
+		$ok = 1;
+		if($timestampinicio < $agora){
+			header("Location: meuseventos.php");
+			$ok = 0;
+		}
 		$datat = htmlspecialchars($_POST['datat']);
 		$horat = htmlspecialchars($_POST['horat']);
 		$datatermino = "$datat $horat";
@@ -35,18 +41,19 @@
 
 			
 
-			
-		if(($tipo == "Feira") or ($tipo == "Congresso")){
-			$query = "insert into evento(titulo, tipo, vagas, tema, descricao, palestrante, datainicio, datatermino, endereco, megaevento, organizador, telefone, investimento, video, cidade, arquivo) values ('$titulo', '$tipo', '$vagas', '$tema', '$descricao', 'vazio', '$timestampinicio', '$timestamptermino', '$endereco', 'sim', '$organizador', '$telefone', '$investimento', '$video', '$cidade', 'nao')";
-			
-			$megaevento = 'sim';
-			mysqli_query($con, $query);
-			header("Location:meuseventos.php");
-		}else{
-			$query = "insert into evento(titulo, tipo, vagas, tema, descricao, palestrante, datainicio, datatermino, endereco, megaevento, organizador, telefone, investimento, video, cidade, arquivo) values ('$titulo', '$tipo', '$vagas', '$tema', '$descricao', 'vazio', '$timestampinicio', '$timestamptermino', '$endereco', 'nao', '$organizador', '$telefone', '$investimento', '$video', '$cidade', 'nao')";
-			$megaevento = 'nao';
-			mysqli_query($con, $query);
-			} 
+		if($ok == 1){	
+			if(($tipo == "Feira") or ($tipo == "Congresso")){
+				$query = "insert into evento(titulo, tipo, vagas, tema, descricao, palestrante, datainicio, datatermino, endereco, megaevento, organizador, telefone, investimento, video, cidade, arquivo) values ('$titulo', '$tipo', '$vagas', '$tema', '$descricao', 'vazio', '$timestampinicio', '$timestamptermino', '$endereco', 'sim', '$organizador', '$telefone', '$investimento', '$video', '$cidade', 'nao')";
+				
+				$megaevento = 'sim';
+				mysqli_query($con, $query);
+				header("Location:meuseventos.php");
+			}else{
+				$query = "insert into evento(titulo, tipo, vagas, tema, descricao, palestrante, datainicio, datatermino, endereco, megaevento, organizador, telefone, investimento, video, cidade, arquivo) values ('$titulo', '$tipo', '$vagas', '$tema', '$descricao', 'vazio', '$timestampinicio', '$timestamptermino', '$endereco', 'nao', '$organizador', '$telefone', '$investimento', '$video', '$cidade', 'nao')";
+				$megaevento = 'nao';
+				mysqli_query($con, $query);
+				} 
+			}
 		}
 			$pegaid = mysqli_query($con, "select * from evento where organizador = '$organizador' order by id desc");
 			if($event = mysqli_fetch_array($pegaid)){

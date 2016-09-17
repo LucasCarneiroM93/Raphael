@@ -91,6 +91,9 @@
 	</figure>
 	</div>
 	<a href="presenca2.php?idevento=<?php echo $idevento; ?>" class="btn btn-primary">Voltar</a>
+	<p></p><p><form>
+	<input type="button" name="imprimir" value="Imprimir" onclick="window.print();">
+	</form></p>
 <?php
 	include "posterior.php";
 ?>

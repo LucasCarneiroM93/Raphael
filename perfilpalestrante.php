@@ -1,5 +1,6 @@
 <?php
 	include "modelo/banco.php";
+	$meu = 0;
 	if(isset($_GET['idvotacao']) and isset($_GET['aceitar'])){
 		$idvotacao = $_GET['idvotacao'];
 		$aceitar = $_GET['aceitar'];
@@ -13,7 +14,9 @@
 	if(empty($_GET['id'])){
 		header("Location:index.php");
 	}
-	$emailcookie = $_COOKIE['email'];
+	if(isset($_COOKIE['email'])){
+		$emailcookie = $_COOKIE['email'];
+	}
 	date_default_timezone_set('America/Sao_Paulo');
 	$id = $_GET['id'];
 	$idpalestrante = $_GET['id'];
@@ -21,6 +24,7 @@
 
 	if($dados = mysqli_fetch_assoc($query)){
 		$nome = $dados['nome'];  
+		$curriculo = $dados['curriculo'];
 		$foto = $dados['foto'];  
 		$email = $dados['email'];  
 		$ddd = $dados['ddd'];
@@ -37,9 +41,6 @@
 	<div class="row">
 	<figure class="col-xs-12 col-sm-4 col-md-3 col-lg-2 imgperfil">
 		<?php
-			
-			
-
 			if($foto == 'nao'){
 				echo "<img class='img-responsive img-circle ftperfil' src='foto/vazio.png' />";
 			}else{
@@ -97,7 +98,6 @@
 
 
 	</figure>
-
 	<section class="col-xs-12 col-sm-8 col-md-9 col-lg-10">
 		<h1>Palestrante <?php echo $nome; ?></h1>
 
@@ -106,7 +106,9 @@
 		<?php
 			if(isset($_COOKIE['email'])){
 				$emailc = $_COOKIE['email'];
+				$meu = 0;
 				if($email == $emailc){
+					$meu = 1;
 					$convites = mysqli_query($con, "select * from convite where email = '$email' and status = 'pendente'");
 					while($convite = mysqli_fetch_array($convites)){
 						$idevento = $convite['idevento']; 
@@ -149,7 +151,9 @@
 			
 			if(isset($_COOKIE['email'])){
 				$emailc = $_COOKIE['email'];
+				$meu = 0;
 				if($email == $emailc){
+					$meu = 1;
 					$votacao = mysqli_query($con, "select * from votacao where emailpa = '$email' and autorizado = 'nao'");
 					while($depoimento = mysqli_fetch_array($votacao)){
 						$comentario = $depoimento['comentario'];
@@ -174,6 +178,28 @@
 					}
 				}
 			}
+		
+			if($curriculo != null){
+			?>
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+		    			<h3 class="panel-title">Sobre <?php echo $nome; ?></h3>
+		  			</div>
+		  			<div class="panel-body">
+		  			<?php
+
+		  				echo $curriculo;
+
+				  			
+		  			?>
+		  			</div>
+		  		</div>
+			<?php
+			}
+				if($meu == 1){
+					echo "<p><a href='editarcurriculo.php' class='btn btn-primary'>Editar Currículo</a></p>";
+				}
+
 		?>
 		
 		
@@ -258,7 +284,15 @@
 		  	  				$idevento = $evento['idevento'];
 		  	  				$dia = date("d/m", $data);
 		  	  				echo "<tr>
-		  	  						<td>$tipo - <a href='evento.php?idevento=$idevento'>$titulo - Dia: $dia</a></td>
+		  	  						<td>";
+
+		  	  				if($meu == 1){
+		  	  					echo " <a href='certificadop.php?id=$idevento' class='btn btn-primary btn-xs'>Certificado</a> ";
+		  	  				}
+		  	  						echo "$tipo - $titulo - Dia: $dia";
+
+
+		  	  						echo "</td>
 		  	  					  </tr>";
 		  	  			}
 

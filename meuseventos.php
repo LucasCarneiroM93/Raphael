@@ -51,6 +51,8 @@
 		 		$nome = "-";
 		 	}else{
 		 	$query2 = mysqli_query($con, "select * from convite where idevento = '$id'");
+		 	$nome = "Sem palestrante";
+		 	$status = "pendente";
 		 	while($evento = mysqli_fetch_array($query2)){
 		 		$emailp = $evento['email'];
 		 		$status = $evento['status'];
@@ -265,7 +267,7 @@
 					$totalvotos = 0;
 				}
 			}
-			echo "<span class='glyphicon glyphicon-user btn btn-primary btn-xs' aria-hidden='true' data-toggle='modal' data-target='#myModal$id'></span> <span class='glyphicon glyphicon-plus btn btn-primary btn-xs' aria-hidden='true' data-toggle='modal' data-target='#myModall$id'></span>";  ?>
+			echo "<span class='glyphicon glyphicon-user btn btn-primary btn-xs' aria-hidden='true' data-toggle='modal' data-target='#myModal$id'></span> <span class='glyphicon glyphicon-plus btn btn-primary btn-xs' aria-hidden='true' data-toggle='modal' data-target='#myModall$id'></span> <a href='grafico.php?id=$id'><span class=\"glyphicon glyphicon-stats btn btn-xs btn-primary \" aria-hidden=\"true\"></span></a>";  ?>
 			<div class="modal fade" id="myModal<?php echo $id;?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 							  <div class="modal-dialog" role="document">
 							    <div class="modal-content">
@@ -305,6 +307,7 @@
 								        }else{
 								        	echo "<p>Não há votos no momento</p>";
 								        }
+								        echo "<hr /><a href='grafico.php?id=$id' class='btn btn-primary btn-sm'><span class=\"glyphicon glyphicon-stats\" aria-hidden=\"true\"></span> Estatistcas</a>";
 							        ?>
 							      </div>
 							      <div class="modal-footer">

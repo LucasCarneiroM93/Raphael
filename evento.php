@@ -11,12 +11,31 @@
 			$idevento = $_GET['idevento'];
 			$query = mysqli_query($con, "select * from evento where id = '$idevento' and datainicio > $atual order by datainicio");
 		}else{
-			$query = mysqli_query($con, "select * from evento where datainicio > $atual order by datainicio");
+			if(isset($_POST['pesquisa'])){
+				$pesquisa = $_POST['pesquisa'];
+				$query = mysqli_query($con, "select * from evento where (titulo like '%$pesquisa%' or tipo like '%$pesquisa%' or tema like '%$pesquisa%' or descricao like '%$pesquisa%' or cidade like '%$pesquisa%' or endereco like '%$pesquisa%') and datainicio > $atual order by datainicio");
+			}else{
+				$query = mysqli_query($con, "select * from evento where datainicio > $atual order by datainicio");
+			}
 		}
 	}
+	?>
+	<form method="post" action="evento.php">
+        <label for="searchBar">Procurar:</label>
+        <div class="input-group">
+            <input type="text" class="form-control" id="searchBar" placeholder="Digite alguma informação sobre o evento" name="pesquisa" />
+            <span class="input-group-btn">
+                <button type="submit" class="btn btn-info" value="Procurar">
+                    <span class="glyphicon glyphicon-search"></span>
+                </button>
+            </span>
+        </div>
+     </form><p></p>
+
+	<?php
 	$registros = mysqli_num_rows($query);
 	if($registros == 0){
-		echo "<p>Não há eventos para exibir, <a href='eventos.php'>Clique aqui</a> para ver todos.</p>";
+		echo "<p>Não há eventos para exibir, <a href='evento.php'>Clique aqui</a> para ver todos.</p>";
 	}else{
 
 

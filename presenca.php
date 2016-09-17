@@ -4,7 +4,7 @@
 
 	include "modelo/banco.php";
 	$atual = time()-60*60*24*2;
-	$query = mysqli_query($con, "select * from evento where organizador = '$email' and datainicio > $atual order by datainicio");
+	$query = mysqli_query($con, "select * from evento where organizador = '$email' order by datainicio desc");
 
 	include "anterior.php";
 	echo "<h1>Meus Eventos</h1>";

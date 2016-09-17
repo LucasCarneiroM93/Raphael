@@ -20,7 +20,7 @@
 		if($presente==0){
 			$presenca = 'Não';
 		}else{
-			$presença = 'Sim';
+			$presenca = 'Sim';
 		}
 		$emailpa = $p['emailp'];
 		$npart = mysqli_query($con, "select * from usuario where email = '$emailpa'");

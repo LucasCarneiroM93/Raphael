@@ -187,11 +187,11 @@
 		  	  				$inicio = date("d/m/Y H:i", $datainicio);
 		  	  				$datatermino = $e['datatermino'];
 		  	  				$fim = date("d/m/Y H:i", $datatermino);
-		  	  				echo "<p>$titulo - De: $inicio até $fim </p><p> <a href='cracha.php?id=$idevento' target='_blank' class='btn btn-primary btn-sm'>Credencial <span class=\"glyphicon glyphicon-user\" aria-hidden=\"true\"></span></a> <a href='excluirparticipacao.php?idevento=$idevento' class='btn btn-danger btn-sm'> Cancelar Participação</a>";
+		  	  				echo "<p>$titulo - De: $inicio até $fim </p><p> <a href='cracha.php?id=$idevento' target='_blank' class='btn btn-primary btn-sm'>Credencial <span class=\"glyphicon glyphicon-user\" aria-hidden=\"true\"></span></a> <a href='excluirparticipacao.php?idevento=$idevento' class='btn btn-danger btn-sm'> Desistir</a>";
 		  	  				$baixar = mysqli_query($con, "select * from participar where idevento=$idevento and emailp = '$emailcookie'");
 		  	  				if($a = mysqli_fetch_assoc($baixar)){
 		  	  					if($arquivo != 'nao'){
-		  	  						echo " <a href='arquivo/$arquivo' class='btn btn-danger btn-sm'>Arquivo da palestra <span class='glyphicon glyphicon-file'></span></a> ";
+		  	  						echo " <a href='arquivo/$arquivo' class='btn btn-danger btn-sm'>Arquivo <span class='glyphicon glyphicon-file'></span></a> ";
 		  	  					}
 		  	  				}
 
@@ -221,20 +221,20 @@
 		  	  				$titulo = $e['titulo'];
 		  	  				$idevento = $e['idevento'];
 		  	  				$datainicio = $e['datainicio'];
-		  	  				$inicio = date("d/m/Y H:i", $datainicio);
+		  	  				$inicio = date("d/m/Y", $datainicio);
 		  	  				$datatermino = $e['datatermino'];
 		  	  				$voto = $e['voto'];
 		  	  				$arquivo = $e['arquivo'];
 		  	  				$fim = date("d/m/Y H:i", $datatermino);
-		  	  				echo "<p>$titulo - De: $inicio até $fim</p><p>";
+		  	  				echo "<p>$titulo - Dia: $inicio</p><p>";
 		  	  				if($voto == 0){
-		  	  					echo "<a class='btn btn-warning' href='votar.php?id=$idevento'>Avaliar</a> ";
+		  	  					echo "<a class='btn btn-warning btn-sm' href='votar.php?id=$idevento'>Avaliar</a> ";
 		  	  				}
-		  	  				echo "<a  class='btn btn-warning btn-sm' href='certificado.php?id=$idevento' target='_blank'>Emitir Certificado </a>";
+		  	  				echo "<a  class='btn btn-warning btn-sm' href='certificado.php?id=$idevento' target='_blank'>Certificado </a>";
 		  	  				$baixar = mysqli_query($con, "select * from participar where idevento=$idevento and emailp = '$emailcookie'");
 		  	  				if($a = mysqli_fetch_assoc($baixar)){
 		  	  					if($arquivo != 'nao'){
-		  	  						echo " <a href='arquivo/$arquivo' class='btn btn-danger btn-sm'>Arquivo da palestra <span class='glyphicon glyphicon-file'></span></a> ";
+		  	  						echo " <a href='arquivo/$arquivo' class='btn btn-danger btn-sm'>Arquivo <span class='glyphicon glyphicon-file'></span></a> ";
 		  	  					}
 		  	  				}
 		  	  				echo "</p><hr />";

@@ -15,9 +15,9 @@
 
 		header("Location:enviaconvite.php");
 	}else{
+		header("Refresh:5,meuseventos.php");
 		include "anterior.php";
 			echo "<p>O Convite já foi enviado com sucesso! Aguarde a resposta.</p>";
 		include "posterior.php";
-		header("Refresh:5,meuseventos.php");
 	}
 ?>

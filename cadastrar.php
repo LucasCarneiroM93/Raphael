@@ -8,6 +8,11 @@
     <input type="text" required class="form-control" id="nome" name="nome" placeholder="Digite seu nome">
   </div>
   <div class="form-group">
+    <p><label for="sexo">Sexo</label></p>
+    <label class="radio-inline"><input type="radio" name="sexo" value="Masculino" checked>Masculino</label>
+    <label class="radio-inline"><input type="radio" name="sexo" value="Feminino">Feminino</label>
+  </div>
+  <div class="form-group">
     <label for="cpf">CPF</label>
     <script src="controle/validarcpf.js"></script>
     <input onBlur="valida()" required type="number" name="cpf" class="form-control" id="cpf" placeholder="Digite seu CPF, somente números">
@@ -17,6 +22,10 @@
   <div class="form-group">
     <label for="cidade">Cidade</label>
     <input type="text" required class="form-control" id="cidade" name="cidade" placeholder="Digite sua cidade">
+  </div>
+  <div class="form-group">
+    <label for="cidade">Estado</label>
+    <input type="text" required class="form-control" id="estado" maxlength="2" name="estado" placeholder="Digite o seu Estado com dois digitos">
   </div>
   <div class="form-group">
     <label for="ddd">DDD</label>

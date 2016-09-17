@@ -7,6 +7,10 @@
 		    <?php
 		    	$agora = time();
 		    	$query = mysqli_query($con, "select e.*, c.*, u.*, u.id as idusu from evento e, convite c, usuario u  where e.datainicio > $agora and status = 'aceito' and e.id = c.idevento and u.email = c.email order by rand() limit 1");
+		    	$t = mysqli_num_rows($query);
+		    	if($t==0){
+		    		echo "<p>Não tem evento no momento, crie seu evento em Acesso Restrito</p>";
+		    	}else{
 		    	while($ev = mysqli_fetch_array($query)){
 		    		$titulo = $ev['titulo'];
 		    		$vagas = $ev['vagas'];
@@ -29,6 +33,7 @@
 		    		$video = $ev['video'];
 
 		    	}
+
 		    ?>
 	
 		    <div class="jumbotron">
@@ -40,7 +45,9 @@
 			  ?></p>
 			  <p><a class="btn btn-primary btn-lg" href="participar.php?idevento=<?php echo $idevento; ?>" role="button">Inscreva-se</a>	<a class="btn btn-danger btn-lg pull-right" href="evento.php" role="button">Mais Eventos</a></p>
 			</div>
-	
+	<?php
+		}
+	?>
 	<div class="panel panel-primary">
 	  <div class="panel-heading">
 	    <h3 class="panel-title">Palestrantes</h3>
@@ -65,7 +72,18 @@
 		  				}
 		  				$geral = $tot/$vt;
 		  				?>
-		  				<div class="col-md-4 col-lg-4 col-sm-6 col-xm-12">	
+		  				<div class="col-md-4 col-lg-4 col-sm-6 col-xm-12 wow <?php
+		  				if($t == 1){
+		  					echo "fadeInLeft";
+		  				}
+		  				if($t == 2){
+		  					echo "fadeInLeft";
+		  				}
+		  				if($t == 0){
+		  					echo "fadeInLeft";
+		  				}
+		  				$y = $t+1;
+		  				?>" data-wow-duration="<?php echo $t; ?>s"  data-wow-delay="<?php echo $y; ?>s">	
 				    		<div class="panel panel-default">
 							  <div class="panel-heading">
 							    <h3 class="panel-title"><?php echo $nome; ?></h3>
@@ -123,6 +141,7 @@
 	  			}
 	  			
 			}
+
 
 	  		
 	  
@@ -200,13 +219,17 @@
 			  </div>
 			<?php
 			  	}
+			  
 			 ?>
 			</div>
 	  </div>
 	</div>
 
-
+			<script src="script/wow.js"></script>
+            <script>
+            	new WOW().init();
+            </script>	
 <?php
 	include "posterior.php";
-?>
 
+?>

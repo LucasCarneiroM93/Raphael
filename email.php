@@ -1,5 +1,4 @@
 <?php
-    include "anterior.php";
     if(empty($_GET['id'])){
         header("Location: perfil.php");
     }
@@ -14,6 +13,13 @@
             header("Location: perfil.php");
         }
     }
+    $participar = mysqli_query($con, "select * from participar where idevento = $id");
+    $total = mysqli_num_rows($participar);
+    if($total == 0){
+        header("Refresh:5, meuseventos.php");
+        include "anterior.php";
+        echo "<p> Não tem inscritos, você será redirecionado para a página anterior.</p>";
+    }else{
 ?>        
         
 
@@ -32,5 +38,6 @@
             </fieldset>
         </form>
 <?php
+    }
     include "posterior.php";
 ?>
